@@ -1,5 +1,14 @@
 const pool = require("../db/db");
 
+const findUserById = async (id) => {
+  try {
+    const result = await pool.query("SELECT * FROM users where id = $1", [id]);
+    return result.rows[0];
+  } catch (error) {
+    throw new Error("Something went wrong");
+  }
+};
+
 const findUserByEmail = async (email) => {
   try {
     const result = await pool.query("SELECT * FROM users where email = $1", [
@@ -7,10 +16,10 @@ const findUserByEmail = async (email) => {
     ]);
     return result;
   } catch (error) {
-    console.log(error,"error");
     throw new Error("Something went wrong");
   }
 };
+
 
 const createUser = async (user) => {
   const { email, username, fullname, password, avatar_url } = user;
@@ -26,4 +35,13 @@ const createUser = async (user) => {
   }
 };
 
-module.exports = { createUser, findUserByEmail };
+const findTransactionById = async (id) => {
+  try {
+    const result = await pool.query("SELECT * FROM transactions where id = $1", [id]);
+    return result.rows[0];
+  } catch (error) {
+    throw new Error("Something went wrong");
+  }
+};
+
+module.exports = { createUser, findUserByEmail, findUserById, findTransactionById };

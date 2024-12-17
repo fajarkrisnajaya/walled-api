@@ -8,5 +8,6 @@ router.post("/auth/register", userController.createUser);
 router.post("/auth/login", userController.login);
 router.get("/profile", authenticateToken, userController.getUserById);
 router.get("/transaction",userController.getTransactionsById);
+router.post("/topup", authenticateToken, userController.topup);
 
 module.exports = router;

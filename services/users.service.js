@@ -46,4 +46,16 @@ const getUserById = async (id) => {
   return user;
 };
 
-module.exports = { createUser, getUserById, login };
+const topup = async (id, amount) => {
+  let user = await userRepository.findUserById(id);
+  if (!user) {
+    throw new Error("user not found");
+  }
+  user.balance = parseInt(user.balance, 10); // Ensure balance is an integer
+  amount = parseInt(amount, 10); // Ensure amount is an integer
+  user.balance += amount;
+  await userRepository.updateUserBalance(id, user.balance);
+  return user;
+};
+
+module.exports = { createUser, getUserById, login, topup };

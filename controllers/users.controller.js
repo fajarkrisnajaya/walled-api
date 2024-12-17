@@ -28,6 +28,20 @@ const getUserById = async (req, res) => {
   }
 };
 
+const topup = async (req, res) => {
+  try {
+    const { id } = req.user;
+    const { amount } = req.body;
+    const user = await userService.topup(id, amount);
+    res.status(200).json({ data: new UserResponse(user) });
+  } catch (error) {
+    res.status(error.statusCode || 500).json({ error: error.message });
+  }
+};
+
+
+
+
 const getTransactionsById = async (req, res) => {
   try {
     const { id } = req.user;
@@ -80,4 +94,4 @@ const login = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-module.exports = { createUser, getUserById, login,getTransactionsById };
+module.exports = { createUser, getUserById, login,getTransactionsById, topup };

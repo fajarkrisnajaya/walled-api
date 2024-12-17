@@ -44,4 +44,12 @@ const findTransactionById = async (id) => {
   }
 };
 
-module.exports = { createUser, findUserByEmail, findUserById, findTransactionById };
+const updateUserBalance = async (id, balance) => {
+  try {
+    await pool.query("UPDATE users SET balance = $1 WHERE id = $2", [balance, id]);
+  } catch (error) {
+    throw new Error("Something went wrong");
+  }
+};
+
+module.exports = { createUser, findUserByEmail, findUserById, findTransactionById, updateUserBalance };
